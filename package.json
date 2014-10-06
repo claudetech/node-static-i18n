@@ -15,7 +15,8 @@
   },
   "keywords": [
     "html",
-    "glob"
+    "i18n",
+    "internationalization"
   ],
   "author": "Daniel Perez",
   "license": "MIT",

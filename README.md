@@ -98,10 +98,10 @@ will generate:
 
 This tool has several configuration options to adapt to most common use cases.
 
-* `selector` (default: '[data-t]'): The selector to look for elements to translate. If it is an attribute, the attribute content is used as the key when non empty, otherwise the text of the element is used.
+* `selector` (default: `[data-t]`): The selector to look for elements to translate. If it is an attribute, the attribute content is used as the key when non empty, otherwise the text of the element is used.
 * `useAttr` (default: `true`): If `false`, the element text is always used as the key, even if the attribute value is not empty.
 * `replace` (default: `false`): If `true`, the element is replaced by the translation. Useful to use something like `<t>my.key</t>` to translate.
-* `locales` (default: ['en']): the list of locales to be generated.
+* `locales` (default: `['en']`): the list of locales to be generated.
   All locales need to have an existing resource file.
 * `fixPaths` (default: `true`): When `true`, the `script[src]` and `link[href]`  relative paths are fixed to fit the new subdirectory structure. (See example above.)
 * `locale` (default: `en`): The default locale.
