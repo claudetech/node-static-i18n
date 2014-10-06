@@ -18,6 +18,7 @@ defaults =
   baseDir: process.cwd()
   removeAttr: true
   outputDir: undefined
+  allowHtml: false
   exclude: []
   fileFormat: 'json'
   localeFile: '__lng__.__fmt__'
@@ -87,7 +88,10 @@ translateElem = ($, elem, options, t) ->
   if options.replace
     $elem.replaceWith trans
   else
-    $elem.text(trans)
+    if options.allowHtml
+      $elem.html(trans)
+    else
+      $elem.text(trans)
 
 getPath = (fpath, locale, options) ->
   filepath = path.relative(options.baseDir, options.file)

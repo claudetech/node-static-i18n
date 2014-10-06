@@ -113,6 +113,7 @@ This tool has several configuration options to adapt to most common use cases.
 * `encoding` (default: `utf8`): The encoding to read files (only works with yaml for now)
 * `files` (default: `**/*.html`): The files to translate, relative to the base directory.
 * `baseDir` (default: `process.cwd()`): The base directory to look for translations. Not useful for CLI usage as it is overriden by the directory argument.
+* `allowHtml` (default: `false`): Allow the usage of HTML in translation
 * `removeAttr` (default: `true`): When `true`, removes the attribute used to translate (e.g. `data-t` will be removed)
 * `outputDir` (default: `i18n`): The directory to output generated files
 * `outputDefault` (default: `__file__`): The name for the default locale output files, relative to `outputDir`. `__file__` will be replaced by the
