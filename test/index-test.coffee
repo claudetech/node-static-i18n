@@ -62,7 +62,7 @@ describe 'processor', ->
     it 'should process all files', (done) ->
       _.merge options, {locales: ['en', 'ja']}
       staticI18n.processDir basepath, options, (err, results) ->
-        expect(results).to.only.have.keys ['index.html', 'other.html']
+        expect(results).to.only.have.keys ['index.html', 'other.html', 'sub/index.html']
         expect(results['index.html']).to.only.have.keys ['en', 'ja']
         expect(results['other.html']).to.only.have.keys ['en', 'ja']
         $ = cheerio.load(results['index.html'].en)
@@ -85,10 +85,12 @@ describe 'processor', ->
     it 'should write all files', (done) ->
       staticI18n.processDir basepath, options, (err, results) ->
         files = fs.readdirSync dir
-        _.each ['index.html', 'other.html', 'ja'], (f) -> expect(files).to.contain(f)
+        _.each ['index.html', 'other.html', 'ja', 'sub'], (f) -> expect(files).to.contain(f)
         files = fs.readdirSync path.join(dir, 'ja')
-        _.each ['index.html', 'other.html'], (f) -> expect(files).to.contain(f)
+        _.each ['index.html', 'other.html', 'sub'], (f) -> expect(files).to.contain(f)
         $ = cheerio.load fs.readFileSync(path.join(dir, 'index.html'), 'utf8')
+        expect($('#bar').text()).to.be 'bar'
+        $ = cheerio.load fs.readFileSync(path.join(dir, 'sub', 'index.html'), 'utf8')
         expect($('#bar').text()).to.be 'bar'
         done()
 
