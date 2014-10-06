@@ -2,6 +2,8 @@
 
 A simple utility to translate static HTML files.
 
+Supports JSON and YAML dictionaries.
+
 ## Installation
 
 For global installation, needed for CLI uage, run
