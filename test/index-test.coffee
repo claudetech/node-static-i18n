@@ -35,6 +35,15 @@ describe 'processor', ->
         expect(results.en).to.be '<p>bar</p>'
         done()
 
+    it 'should translate attributes', (done) ->
+      input = '<input class="foo" id="ok" data-attr-t value-t="foo.bar">'
+      staticI18n.process input, options, (err, results) ->
+        expect(results).to.only.have.keys ['en']
+        $ = cheerio.load(results.en)
+        expect($('input').attr('value')).to.be 'bar'
+        expect($('input').attr('id')).to.be 'ok'
+        done()
+
   describe '#processFile', ->
     it 'should translate data-t', (done) ->
       staticI18n.processFile file, options, (err, results) ->

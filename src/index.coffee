@@ -6,9 +6,11 @@ async   = require 'async'
 path    = require 'path'
 glob    = require 'glob'
 yaml    = require 'js-yaml'
+S       = require 'string'
 
 defaults =
   selector: '[data-t]'
+  attrSelector: '[data-attr-t]'
   useAttr: true
   replace: false
   locales: ['en']
@@ -18,6 +20,7 @@ defaults =
   baseDir: process.cwd()
   removeAttr: true
   outputDir: undefined
+  attrSuffix: '-t'
   allowHtml: false
   exclude: []
   fileFormat: 'json'
@@ -78,12 +81,24 @@ getOutput = (file, locale, options, absolute=true) ->
   else
     outputFile
 
+translateAttributes = ($elem, options, t) ->
+  selectorAttr = /^\[(.*?)\]$/.exec(options.attrSelector)?[1]
+  _.each $elem.attr(), (v, k) ->
+    return if _.isEmpty(v) || k == selectorAttr
+    if S(k).endsWith(options.attrSuffix)
+      attr = S(k).chompRight(options.attrSuffix).s
+      trans = t(v)
+      $elem.attr(attr, trans)
+      $elem.attr(k, null) if options.removeAttr
+  $elem.attr(selectorAttr, null) if selectorAttr? && options.removeAttr
+
 translateElem = ($, elem, options, t) ->
   $elem = $(elem)
   if options.useAttr && attr = /^\[(.*?)\]$/.exec(options.selector)
     key = $elem.attr(attr[1])
     $elem.attr(attr[1], null) if options.removeAttr
   key = $elem.text() if _.isEmpty(key)
+  return if _.isEmpty(key)
   trans = t(key)
   if options.replace
     $elem.replaceWith trans
@@ -112,6 +127,8 @@ exports.translate = (html, locale, options, t) ->
   elems = $(options.selector)
   elems.each ->
     translateElem $, this, options, t
+  $(options.attrSelector).each ->
+    translateAttributes $(this), options, t
   if options.file && options.fixPaths
     fixPaths $, locale, options
   $.html()

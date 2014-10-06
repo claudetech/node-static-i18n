@@ -30,6 +30,7 @@ With the following files:
   <body>
     <h1 data-t="my.key"></h1>
     <p data-t>other.key</p>
+    <input type="submit" data-attr-t value-t="other.ok">
   </body>
 </html>
 ```
@@ -42,7 +43,8 @@ With the following files:
     "key": "Hey"
   },
   "other": {
-    "key": "man"
+    "key": "man",
+    "ok": "confirm"
   }
 }
 ```
@@ -55,7 +57,8 @@ With the following files:
     "key": "Salut"
   },
   "other": {
-    "key": "mec"
+    "key": "mec",
+    "ok": "confirmer"
   }
 }
 ```
@@ -78,6 +81,7 @@ will generate:
   <body>
     <h1>Hey</h1>
     <p>man</p>
+    <input type="submit" value="confirm">
   </body>
 </html>
 ```
@@ -92,6 +96,7 @@ will generate:
   <body>
     <h1>Salut</h1>
     <p>mec</p>
+    <input type="submit" value="confirmer">
   </body>
 </html>
 ```
@@ -101,6 +106,9 @@ will generate:
 This tool has several configuration options to adapt to most common use cases.
 
 * `selector` (default: `[data-t]`): The selector to look for elements to translate. If it is an attribute, the attribute content is used as the key when non empty, otherwise the text of the element is used.
+* `attrSelector` (default: `[data-attr-t]`): The selector to look for elements
+for which to translate attributes.
+* `attrSuffix` (default: `-t`): Suffix for attr to translate. `value-t` will be translated and mapped to `value`.
 * `useAttr` (default: `true`): If `false`, the element text is always used as the key, even if the attribute value is not empty.
 * `replace` (default: `false`): If `true`, the element is replaced by the translation. Useful to use something like `<t>my.key</t>` to translate.
 * `locales` (default: `['en']`): the list of locales to be generated.
