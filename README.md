@@ -107,6 +107,7 @@ This tool has several configuration options to adapt to most common use cases.
   All locales need to have an existing resource file.
 * `fixPaths` (default: `true`): When `true`, the `script[src]` and `link[href]`  relative paths are fixed to fit the new subdirectory structure. (See example above.)
 * `locale` (default: `en`): The default locale.
+* `exclude` (default: `[]`): Files to exclude. Can contain regex (uses normal test) or string (uses startsWith).
 * `fileFormat` (default: `json`): The file format for the translations.
   Supports `json`, and `yml` or `yaml` which will be treated as YAML files. The file extension must match this format.
 * `encoding` (default: `utf8`): The encoding to read files (only works with yaml for now)

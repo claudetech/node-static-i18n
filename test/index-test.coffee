@@ -68,7 +68,7 @@ describe 'processor', ->
 
   describe '#processDir', ->
     it 'should process all files', (done) ->
-      _.merge options, {locales: ['en', 'ja']}
+      _.merge options, {locales: ['en', 'ja'], exclude: ['ignored/']}
       staticI18n.processDir basepath, options, (err, results) ->
         expect(results).to.only.have.keys ['index.html', 'other.html', 'sub/index.html']
         expect(results['index.html']).to.only.have.keys ['en', 'ja']

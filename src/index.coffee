@@ -18,6 +18,7 @@ defaults =
   baseDir: process.cwd()
   removeAttr: true
   outputDir: undefined
+  exclude: []
   fileFormat: 'json'
   localeFile: '__lng__.__fmt__'
   outputDefault: '__file__'
@@ -149,6 +150,10 @@ exports.processDir = (dir, options, callback) ->
   options.baseDir ?= dir
   glob path.join(dir, options.files ? defaults.files), (err, files) ->
     return callback(err) if err
+    files = _.reject files, (f) ->
+      f = path.relative options.baseDir, f
+      _.some options.exclude, (i) ->
+        if i.test then i.test(f) else f.indexOf(i) == 0
     async.map files, (file, cb) ->
       exports.processFile file, options, cb
     , (err, results) ->
