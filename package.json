@@ -29,7 +29,8 @@
     "grunt": "^0.4.5",
     "grunt-contrib-coffee": "^0.11.1",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-mocha-cov": "^0.3.0"
+    "grunt-mocha-cov": "^0.3.0",
+    "tmp": "0.0.24"
   },
   "config": {
     "blanket": {
@@ -41,6 +42,7 @@
   "dependencies": {
     "async": "^0.9.0",
     "cheerio": "^0.17.0",
+    "fs-extra": "^0.12.0",
     "glob": "^4.0.6",
     "i18next": "^1.7.4",
     "lodash": "^2.4.1",

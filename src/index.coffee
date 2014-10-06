@@ -1,4 +1,4 @@
-fs      = require 'fs'
+fs      = require 'fs-extra'
 cheerio = require 'cheerio'
 _       = require 'lodash'
 i18n    = require 'i18next'
@@ -15,6 +15,10 @@ defaults =
   files: '**/*.html'
   baseDir: process.cwd()
   removeAttr: true
+  outputDir: undefined
+  outputDefault: '__file__'
+  outputOther: '__lng__/__file__'
+  outputOverride: {}
   i18n:
     resGetPath: 'locales/__lng__.json'
 
@@ -24,6 +28,8 @@ getOptions = (baseOptions) ->
     options.i18n.resGetPath = "#{options.localesPath}/__lng__.json"
   unless baseOptions?.i18n?.lng
     options.i18n.lng = options.locale
+  if _.isUndefined(baseOptions?.outputDir)
+    options.outputDir = path.join(options.baseDir, 'i18n')
   options
 
 translateElem = ($, elem, options, t) ->
@@ -55,12 +61,37 @@ exports.process = (rawHtml, options, callback) ->
     , (err, results) ->
       callback err, _.zipObject(options.locales, results)
 
+getOutput = (file, locale, options) ->
+  if options.outputOverride?[locale]?[file]
+    output = options.outputOverride[locale][file]
+  else if locale == options.locale
+    output = options.outputDefault
+  else
+    output = options.outputOther
+  outputFile = output.replace('__lng__', locale).replace('__file__', file)
+  path.join options.outputDir, outputFile
+
+outputFile = (file, options, results, callback) ->
+  async.each _.keys(results), (locale, cb) ->
+    result = results[locale]
+    filepath = path.relative(options.baseDir, file)
+    output = getOutput filepath, locale, options
+    fs.outputFile output, result, cb
+  , (err) ->
+    callback err, results
+
 exports.processFile = (file, options, callback) ->
+  options = getOptions options
   fs.readFile file, 'utf8', (err, html) ->
     return callback(err) if err
-    exports.process html, options, callback
+    exports.process html, options, (err, results) ->
+      if options.outputDir
+        outputFile file, options, results, callback
+      else
+        callback err, results
 
 exports.processDir = (dir, options, callback) ->
+  options.baseDir ?= dir
   glob path.join(dir, options.files ? defaults.files), (err, files) ->
     return callback(err) if err
     async.map files, (file, cb) ->
