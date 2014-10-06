@@ -99,3 +99,15 @@ describe 'processor', ->
         _.each ['foo.html', 'other.html', 'ja'], (f) -> expect(files).to.contain(f)
         expect(files).to.not.contain 'index.html'
         done()
+
+    it 'should fix pathes', (done) ->
+      staticI18n.processDir basepath, options, (err, results) ->
+        $ = cheerio.load fs.readFileSync(path.join(dir, 'ja', 'index.html'), 'utf8')
+        expect($('#rel-script').attr('src')).to.be '../foo.js'
+        expect($('#abs-script').attr('src')).to.be '//foo.js'
+        expect($('#rel-link').attr('href')).to.be '../foo.css'
+        expect($('#abs-link').attr('href')).to.be '//foo.css'
+        $ = cheerio.load fs.readFileSync(path.join(dir, 'index.html'), 'utf8')
+        expect($('#rel-script').attr('src')).to.be 'foo.js'
+        expect($('#rel-link').attr('href')).to.be 'foo.css'
+        done()

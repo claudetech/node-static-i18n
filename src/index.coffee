@@ -11,6 +11,7 @@ defaults =
   useAttr: true
   replace: false
   locales: ['en']
+  fixPaths: true
   locale: 'en'
   files: '**/*.html'
   baseDir: process.cwd()
@@ -22,6 +23,8 @@ defaults =
   i18n:
     resGetPath: 'locales/__lng__.json'
 
+absolutePathRegex = new RegExp('^(?:[a-z]+:)?//', 'i')
+
 getOptions = (baseOptions) ->
   options = _.merge {}, defaults, baseOptions
   unless baseOptions?.i18n?.resGetPath
@@ -31,6 +34,20 @@ getOptions = (baseOptions) ->
   if _.isUndefined(baseOptions?.outputDir)
     options.outputDir = path.join(options.baseDir, 'i18n')
   options
+
+getOutput = (file, locale, options, absolute=true) ->
+  if options.outputOverride?[locale]?[file]
+    output = options.outputOverride[locale][file]
+  else if locale == options.locale
+    output = options.outputDefault
+  else
+    output = options.outputOther
+  outputFile = output.replace('__lng__', locale).replace('__file__', file)
+  if absolute
+    outdir = if _.isString(options.outputDir) then options.outputDir else options.baseDir
+    path.join outdir, outputFile
+  else
+    outputFile
 
 translateElem = ($, elem, options, t) ->
   $elem = $(elem)
@@ -44,11 +61,27 @@ translateElem = ($, elem, options, t) ->
   else
     $elem.text(trans)
 
-exports.translate = (html, options, t) ->
+getPath = (fpath, locale, options) ->
+  filepath = path.relative(options.baseDir, options.file)
+  output = getOutput filepath, locale, options, false
+  diff = path.relative(path.dirname(output), '')
+  if _.isEmpty(diff) then fpath else "#{diff}/#{fpath}"
+
+fixPaths = ($, locale, options) ->
+  _.each {src: 'script[src]', href: 'link[href]'}, (v, k) ->
+    $(v).each (script) ->
+      src = $(this).attr(k)
+      unless absolutePathRegex.test(src)
+        filepath = getPath src, locale, options
+        $(this).attr(k, filepath)
+
+exports.translate = (html, locale, options, t) ->
   $ = cheerio.load(html)
   elems = $(options.selector)
   elems.each ->
     translateElem $, this, options, t
+  if options.file && options.fixPaths
+    fixPaths $, locale, options
   $.html()
 
 exports.process = (rawHtml, options, callback) ->
@@ -56,20 +89,11 @@ exports.process = (rawHtml, options, callback) ->
   i18n.init options.i18n, ->
     async.map options.locales, (locale, cb) ->
       i18n.setLng locale, (t) ->
-        html = exports.translate rawHtml, _.extend({}, options, {locale: locale}), t
+        html = exports.translate rawHtml, locale, options, t
         cb null, html
     , (err, results) ->
       callback err, _.zipObject(options.locales, results)
 
-getOutput = (file, locale, options) ->
-  if options.outputOverride?[locale]?[file]
-    output = options.outputOverride[locale][file]
-  else if locale == options.locale
-    output = options.outputDefault
-  else
-    output = options.outputOther
-  outputFile = output.replace('__lng__', locale).replace('__file__', file)
-  path.join options.outputDir, outputFile
 
 outputFile = (file, options, results, callback) ->
   async.each _.keys(results), (locale, cb) ->
@@ -82,6 +106,7 @@ outputFile = (file, options, results, callback) ->
 
 exports.processFile = (file, options, callback) ->
   options = getOptions options
+  options.file ?= file
   fs.readFile file, 'utf8', (err, html) ->
     return callback(err) if err
     exports.process html, options, (err, results) ->
