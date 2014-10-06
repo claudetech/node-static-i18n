@@ -27,6 +27,14 @@ describe 'processor', ->
         expect(results.en).to.be '<p>bar</p>'
         done()
 
+    it 'should work with yaml', (done) ->
+      input = '<p data-t="yaml.bar"></p>'
+      _.merge options, {fileFormat: 'yml'}
+      staticI18n.process input, options, (err, results) ->
+        expect(results).to.only.have.keys ['en']
+        expect(results.en).to.be '<p>bar</p>'
+        done()
+
   describe '#processFile', ->
     it 'should translate data-t', (done) ->
       staticI18n.processFile file, options, (err, results) ->

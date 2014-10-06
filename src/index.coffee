@@ -5,6 +5,7 @@ i18n    = require 'i18next'
 async   = require 'async'
 path    = require 'path'
 glob    = require 'glob'
+yaml    = require 'js-yaml'
 
 defaults =
   selector: '[data-t]'
@@ -17,19 +18,44 @@ defaults =
   baseDir: process.cwd()
   removeAttr: true
   outputDir: undefined
+  fileFormat: 'json'
+  localeFile: '__lng__.__fmt__'
   outputDefault: '__file__'
   outputOther: '__lng__/__file__'
   localesPath: 'locales'
   outputOverride: {}
+  encoding: 'utf8'
   i18n:
     resGetPath: 'locales/__lng__.json'
 
 absolutePathRegex = new RegExp('^(?:[a-z]+:)?//', 'i')
 
+parseTranslations = (format, rawTranslations, callback) ->
+  switch format
+    when '.yml', '.yaml'
+      try
+        callback null, yaml.load(rawTranslations)
+      catch e
+        callback e
+    else
+      callback {message: 'unknown format'}
+
+loadResources = (locale, options, callback) ->
+  file = path.join(options.localesPath, options.localeFile).replace('__lng__', locale)
+  extension =  path.extname file
+  return callback(null) if extension == '.json'
+  fs.readFile file, options.encoding, (err, data) ->
+    return callback(err) if err
+    parseTranslations extension, data, callback
+
 getOptions = (baseOptions) ->
   options = _.merge {}, defaults, baseOptions
+  options.localeFile = options.localeFile.replace('__fmt__', options.fileFormat)
   unless baseOptions?.i18n?.resGetPath
-    options.i18n.resGetPath = "#{options.localesPath}/__lng__.json"
+    if path.extname(options.localeFile) == '.json'
+      options.i18n.resGetPath = path.join options.localesPath, options.localeFile
+    else
+      options.i18n.resGetPath = path.join options.localesPath, '__lng__.json'
   unless baseOptions?.i18n?.lng
     options.i18n.lng = options.locale
   if _.isUndefined(baseOptions?.outputDir)
@@ -90,8 +116,10 @@ exports.process = (rawHtml, options, callback) ->
   i18n.init options.i18n, ->
     async.mapSeries options.locales, (locale, cb) ->
       i18n.setLng locale, (t) ->
-        html = exports.translate rawHtml, locale, options, t
-        cb null, html
+        loadResources locale, options, (err, resources) ->
+          i18n.addResourceBundle locale, 'translation', resources unless err || _.isEmpty(resources)
+          html = exports.translate rawHtml, locale, options, t
+          cb err, html
     , (err, results) ->
       callback err, _.zipObject(options.locales, results)
 
@@ -108,9 +136,10 @@ outputFile = (file, options, results, callback) ->
 exports.processFile = (file, options, callback) ->
   options = getOptions options
   options.file ?= file
-  fs.readFile file, 'utf8', (err, html) ->
+  fs.readFile file, options.encoding, (err, html) ->
     return callback(err) if err
     exports.process html, options, (err, results) ->
+      return callback(err) if err
       if options.outputDir
         outputFile file, options, results, callback
       else

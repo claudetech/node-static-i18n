@@ -15,6 +15,8 @@ var minimistOptions = {
   , 'output-dir': 'outputDir'
   , 'base-dir': 'baseDir'
   , f: 'fixPaths'
+  , t: 'fileFormat'
+  , 'file-format': 'fileFormat'
   , 'fix-paths': 'fixPaths'
   , 'locales-path': 'localesPath'
   , 'output-override': 'outputOverride'
@@ -47,7 +49,7 @@ if (argv.i18n) {
 staticI18n.processDir(argv._[0], argv, function (err, results) {
   if (err) {
     console.log("An error has occured:");
-    console.log(err);
+    console.log(err.toString());
     process.exit(1);
   }
 });
