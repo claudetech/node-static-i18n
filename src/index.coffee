@@ -88,7 +88,7 @@ exports.translate = (html, locale, options, t) ->
 exports.process = (rawHtml, options, callback) ->
   options = getOptions options
   i18n.init options.i18n, ->
-    async.map options.locales, (locale, cb) ->
+    async.mapSeries options.locales, (locale, cb) ->
       i18n.setLng locale, (t) ->
         html = exports.translate rawHtml, locale, options, t
         cb null, html
