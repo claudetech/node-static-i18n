@@ -71,7 +71,7 @@ fixPaths = ($, locale, options) ->
   _.each {src: 'script[src]', href: 'link[href]'}, (v, k) ->
     $(v).each (script) ->
       src = $(this).attr(k)
-      unless absolutePathRegex.test(src)
+      unless src[0] == '/' || absolutePathRegex.test(src)
         filepath = getPath src, locale, options
         $(this).attr(k, filepath)
 
