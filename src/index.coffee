@@ -19,6 +19,7 @@ defaults =
   outputDir: undefined
   outputDefault: '__file__'
   outputOther: '__lng__/__file__'
+  localesPath: 'locales'
   outputOverride: {}
   i18n:
     resGetPath: 'locales/__lng__.json'
@@ -32,7 +33,7 @@ getOptions = (baseOptions) ->
   unless baseOptions?.i18n?.lng
     options.i18n.lng = options.locale
   if _.isUndefined(baseOptions?.outputDir)
-    options.outputDir = path.join(options.baseDir, 'i18n')
+    options.outputDir = path.join(process.cwd(), 'i18n')
   options
 
 getOutput = (file, locale, options, absolute=true) ->
