@@ -154,7 +154,7 @@ exports.processDir = (dir, options, callback) ->
       f = path.relative options.baseDir, f
       _.some options.exclude, (i) ->
         if i.test then i.test(f) else f.indexOf(i) == 0
-    async.map files, (file, cb) ->
+    async.mapSeries files, (file, cb) ->
       exports.processFile file, options, cb
     , (err, results) ->
       files = _.map files, (f) -> path.relative(dir, f)
