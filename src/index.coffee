@@ -96,12 +96,12 @@ getPath = (fpath, locale, options) ->
   if _.isEmpty(diff) then fpath else "#{diff}/#{fpath}"
 
 fixPaths = ($, locale, options) ->
-  _.each {src: 'script[src]', href: 'link[href]'}, (v, k) ->
-    $(v).each (script) ->
-      src = $(this).attr(k)
+  _.each {'script[src]': 'src', 'link[href]': 'href', 'img[src]': 'src'}, (v, k) ->
+    $(k).each ->
+      src = $(this).attr(v)
       unless src[0] == '/' || absolutePathRegex.test(src)
         filepath = getPath src, locale, options
-        $(this).attr(k, filepath)
+        $(this).attr(v, filepath)
 
 exports.translate = (html, locale, options, t) ->
   $ = cheerio.load(html)
