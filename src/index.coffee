@@ -123,7 +123,7 @@ fixPaths = ($, locale, options) ->
         $(this).attr(v, filepath)
 
 exports.translate = (html, locale, options, t) ->
-  $ = cheerio.load(html)
+  $ = cheerio.load(html, {decodeEntities: false})
   elems = $(options.selector)
   elems.each ->
     translateElem $, this, options, t
