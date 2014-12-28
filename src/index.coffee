@@ -32,6 +32,7 @@ defaults =
   encoding: 'utf8'
   i18n:
     resGetPath: 'locales/__lng__.json'
+    setJqueryExt: false
 
 absolutePathRegex = new RegExp('^(?:[a-z]+:)?//', 'i')
 
