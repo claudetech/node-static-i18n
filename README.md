@@ -12,7 +12,7 @@ For global installation, needed for CLI uage, run
 $ npm install -g static-i18n
 ```
 
-Note that you can also use this as a grunt plugin.
+Note that you can also use this as a [Grunt plugin](https://github.com/claudetech/grunt-i18n-static).
 
 ## Example
 
