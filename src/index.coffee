@@ -138,7 +138,8 @@ exports.process = (rawHtml, options, callback) ->
   options = getOptions options
   i18n.init options.i18n, ->
     async.mapSeries options.locales, (locale, cb) ->
-      i18n.setLng locale, (t) ->
+      i18n.setLng locale, (err, t) ->
+        t = err unless t?
         loadResources locale, options, (err, resources) ->
           i18n.addResourceBundle locale, 'translation', resources unless err || _.isEmpty(resources)
           html = exports.translate rawHtml, locale, options, t
