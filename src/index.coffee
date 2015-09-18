@@ -36,7 +36,7 @@ defaults =
     setJqueryExt: false
 
 absolutePathRegex = new RegExp('^(?:[a-z]+:)?//', 'i')
-conditionalCommentRegex = /(\s*\[\s*if .*?\]\s*>)(.*?)(<\s*!\s*\[\s*endif\s*\]\s*)/i
+conditionalCommentRegex = /(\s*\[if .*?\]\s*>\s*)(.*?)(\s*<!\s*\[endif\]\s*)/i
 closingTagRegex = /<\/.+?>/g
 
 parseTranslations = (format, rawTranslations, callback) ->
@@ -140,14 +140,16 @@ translateConditionalComment = (node, locale, options, t) ->
     result = result.replace closingTag, ''
   node.data = match[1] + result + match[3]
 
-translateConditionalComments = ($, locale, options, t) ->
-  comments = $.root().contents().filter (i, node) -> node.type == 'comment'
-  comments.each (i, node) ->
-    translateConditionalComment(node, locale, options, t)
+translateConditionalComments = ($, rootNode, locale, options, t) ->
+  rootNode.contents().each (i, node) ->
+    if node.type == 'comment'
+      translateConditionalComment(node, locale, options, t)
+    else
+      translateConditionalComments($, $(node), locale, options, t)
 
 exports.translate = (html, locale, options, t) ->
   $ = cheerio.load(html, {decodeEntities: false})
-  translateConditionalComments $, locale, options, t if options.translateConditionalComments
+  translateConditionalComments $, $.root(), locale, options, t if options.translateConditionalComments
   elems = $(options.selector)
   elems.each ->
     translateElem $, this, options, t

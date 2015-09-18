@@ -2,5 +2,6 @@
   "foo": {
     "bar": "bar",
     "baz": "baz"
-  }
+  },
+  "browsehappy": "You are using an outdated browser"
 }

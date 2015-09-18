@@ -82,6 +82,7 @@ describe 'processor', ->
         expect(html.indexOf('data-attr-t')).to.be -1
         _.each [6, 7, 8], (n) ->
           expect(html.indexOf("class=\"ie ie#{n}\" lang=\"bar\"")).not.to.be -1
+        expect(html.indexOf('You are using')).not.to.be -1
         done()
 
 
