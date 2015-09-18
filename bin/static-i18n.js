@@ -4,7 +4,7 @@ var minimist   = require('minimist')
   , staticI18n = require('../lib');
 
 var minimistOptions = {
-  boolean: ['replace', 'useAttr', 'removeAttr', 'fixPaths']
+  boolean: ['replace', 'useAttr', 'removeAttr', 'fixPaths', 'translateConditionalComments']
 , string: ['locale', 'selector', 'outputDir', 'outputDefault', 'outputOther', 'locales']
 , alias: {
     l: 'locale'
@@ -14,6 +14,7 @@ var minimistOptions = {
   , o: 'outputDir'
   , 'output-dir': 'outputDir'
   , 'base-dir': 'baseDir'
+  ,  'translate-conditional-comments': 'translateConditionalComments'
   , f: 'fixPaths'
   , t: 'fileFormat'
   , 'file-format': 'fileFormat'

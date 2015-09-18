@@ -1,13 +1,14 @@
 {
   "name": "static-i18n",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "Utility to translate static HTML files.",
   "main": "lib/index.js",
   "bin": {
     "static-i18n": "bin/static-i18n.js"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "prepublish": "grunt build"
   },
   "repository": {
     "type": "git",

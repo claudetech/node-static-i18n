@@ -30,11 +30,14 @@ defaults =
   localesPath: 'locales'
   outputOverride: {}
   encoding: 'utf8'
+  translateConditionalComments: false
   i18n:
     resGetPath: 'locales/__lng__.json'
     setJqueryExt: false
 
 absolutePathRegex = new RegExp('^(?:[a-z]+:)?//', 'i')
+conditionalCommentRegex = /(\s*\[\s*if .*?\]\s*>)(.*?)(<\s*!\s*\[\s*endif\s*\]\s*)/i
+closingTagRegex = /<\/.+?>/g
 
 parseTranslations = (format, rawTranslations, callback) ->
   switch format
@@ -123,8 +126,28 @@ fixPaths = ($, locale, options) ->
         filepath = getPath src, locale, options
         $(this).attr(v, filepath)
 
+translateConditionalComment = (node, locale, options, t) ->
+  content = node.data
+  match = conditionalCommentRegex.exec(content)
+  return unless match
+  result = exports.translate(match[2], locale, options, t)
+  # NOTE: closing tag is added on parsing, so extra </html> or whatsoever
+  # may be added. Find closing tags, and check if they are in the original input
+  # Remove them from the output if they were not there before
+  closingTags = result.match closingTagRegex
+  _.each closingTags, (closingTag) ->
+    return unless content.indexOf(closingTag) == -1
+    result = result.replace closingTag, ''
+  node.data = match[1] + result + match[3]
+
+translateConditionalComments = ($, locale, options, t) ->
+  comments = $.root().contents().filter (i, node) -> node.type == 'comment'
+  comments.each (i, node) ->
+    translateConditionalComment(node, locale, options, t)
+
 exports.translate = (html, locale, options, t) ->
   $ = cheerio.load(html, {decodeEntities: false})
+  translateConditionalComments $, locale, options, t if options.translateConditionalComments
   elems = $(options.selector)
   elems.each ->
     translateElem $, this, options, t

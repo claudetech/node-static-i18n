@@ -121,6 +121,7 @@ for which to translate attributes.
 * `encoding` (default: `utf8`): The encoding to read files (only works with yaml for now)
 * `files` (default: `**/*.html`): The files to translate, relative to the base directory.
 * `baseDir` (default: `process.cwd()`): The base directory to look for translations. Not useful for CLI usage as it is overriden by the directory argument.
+* `translateConditionalComments` (default: `false`): Translate the content of conditional comments (see #1). This is still experimental, and could fail on edge cases. Open an issue if needed.
 * `allowHtml` (default: `false`): Allow the usage of HTML in translation
 * `removeAttr` (default: `true`): When `true`, removes the attribute used to translate (e.g. `data-t` will be removed)
 * `outputDir` (default: `i18n`): The directory to output generated files

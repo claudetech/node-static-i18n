@@ -74,6 +74,17 @@ describe 'processor', ->
         expect($('#bar-replace-sel').html()).to.be 'bar'
         done()
 
+    it 'should translate conditional comments', (done) ->
+      options = _.defaults {translateConditionalComments: true}, options
+      staticI18n.processFile file, options, (err, results) ->
+        $ = cheerio.load(results.en)
+        html = $.html()
+        expect(html.indexOf('data-attr-t')).to.be -1
+        _.each [6, 7, 8], (n) ->
+          expect(html.indexOf("class=\"ie ie#{n}\" lang=\"bar\"")).not.to.be -1
+        done()
+
+
 
   describe '#processDir', ->
     it 'should process all files', (done) ->
