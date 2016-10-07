@@ -119,7 +119,7 @@ getPath = (fpath, locale, options) ->
   if _.isEmpty(diff) then fpath else "#{diff}/#{fpath}"
 
 fixPaths = ($, locale, options) ->
-  _.each {'script[src]': 'src', 'link[href]': 'href', 'img[src]': 'src'}, (v, k) ->
+  _.each {'script[src]': 'src', 'link[href]': 'href', 'img[src]': 'src', 'source[src]': 'src',}, (v, k) ->
     $(k).each ->
       src = $(this).attr(v)
       unless src[0] == '/' || absolutePathRegex.test(src)
