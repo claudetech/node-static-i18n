@@ -127,7 +127,7 @@ for which to translate attributes.
 * `outputDir` (default: `i18n`): The directory to output generated files
 * `outputDefault` (default: `__file__`): The name for the default locale output files, relative to `outputDir`. `__file__` will be replaced by the
  current file name
-* `outputDefault` (default: `__lng__/__file__`): The name for the other locales output files, relative to `outputDir`. `__lng__` will be replaced
+* `outputOther` (default: `__lng__/__file__`): The name for the other locales output files, relative to `outputDir`. `__lng__` will be replaced
   by the current locale
 * `localesPath` (default: `locales`): The directory of the translations, where
   each file should be named `LOCALE_NAME.json`
