@@ -1,4 +1,6 @@
-# node-static-i18n [![Build Status](https://travis-ci.org/claudetech/node-static-i18n.svg?branch=master)](https://travis-ci.org/claudetech/node-static-i18n)
+# node-static-i18n
+
+[![Build Status](https://travis-ci.org/claudetech/node-static-i18n.svg?branch=master)](https://travis-ci.org/claudetech/node-static-i18n)  [![dependencies Status](https://david-dm.org/claudetech/node-static-i18n/status.svg)](https://david-dm.org/claudetech/node-static-i18n) [![devDependencies Status](https://david-dm.org/claudetech/node-static-i18n/dev-status.svg)](https://david-dm.org/claudetech/node-static-i18n?type=dev)
 
 A simple utility to translate static HTML files.
 
@@ -6,7 +8,7 @@ Supports JSON and YAML dictionaries.
 
 ## Installation
 
-For global installation, needed for CLI uage, run
+For global installation, needed for CLI usage, run
 
 ```sh
 $ npm install -g static-i18n

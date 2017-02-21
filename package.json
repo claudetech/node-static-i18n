@@ -1,38 +1,13 @@
 {
   "name": "static-i18n",
-  "version": "0.1.16",
   "description": "Utility to translate static HTML files.",
-  "main": "lib/index.js",
+  "version": "0.1.16",
+  "author": "Daniel Perez",
   "bin": {
     "static-i18n": "bin/static-i18n.js"
   },
-  "scripts": {
-    "test": "grunt test",
-    "prepublish": "grunt build"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/claudetech/node-static-i18n"
-  },
-  "keywords": [
-    "html",
-    "i18n",
-    "internationalization"
-  ],
-  "author": "Daniel Perez",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/claudetech/node-static-i18n/issues"
-  },
-  "homepage": "https://github.com/claudetech/node-static-i18n",
-  "devDependencies": {
-    "coffee-script": "^1.8.0",
-    "expect.js": "^0.3.1",
-    "grunt": "^0.4.5",
-    "grunt-contrib-coffee": "^0.11.1",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-mocha-cov": "^0.3.0",
-    "tmp": "0.0.24"
   },
   "config": {
     "blanket": {
@@ -42,14 +17,39 @@
     }
   },
   "dependencies": {
-    "async": "^0.9.0",
-    "cheerio": "^0.17.0",
-    "fs-extra": "^0.12.0",
-    "glob": "^4.0.6",
-    "i18next": "^1.7.4",
+    "async": "^2.1.5",
+    "cheerio": "^0.22.0",
+    "fs-extra": "^2.0.0",
+    "glob": "^7.1.1",
+    "i18next": "^7.0.1",
     "js-yaml": "^3.2.2",
-    "lodash": "^2.4.1",
+    "lodash": "^4.17.4",
     "minimist": "^1.1.0",
-    "string": "^2.1.0"
+    "string": "^3.3.3"
+  },
+  "devDependencies": {
+    "coffee-script": "^1.8.0",
+    "expect.js": "^0.3.1",
+    "grunt": "^1.0.1",
+    "grunt-contrib-coffee": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-mocha-cov": "^0.4.0",
+    "tmp": "^0.0.31"
+  },
+  "homepage": "https://github.com/claudetech/node-static-i18n",
+  "keywords": [
+    "html",
+    "i18n",
+    "internationalization"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/claudetech/node-static-i18n"
+  },
+  "scripts": {
+    "prepublish": "grunt build",
+    "test": "grunt test"
   }
 }
