@@ -3,5 +3,9 @@
     "bar": "bar",
     "baz": "baz"
   },
-  "browsehappy": "You are using an outdated browser"
+  "browsehappy": "You are using an outdated browser",
+  "links": {
+      "baseAbsolute": "http://www.example.com/",
+      "extension": "html"
+  }
 }

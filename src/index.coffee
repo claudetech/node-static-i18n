@@ -10,7 +10,8 @@ S       = require 'string'
 
 defaults =
   selector: '[data-t]'
-  attrSelector: '[data-attr-t]'
+  attrSelector: '[data-attr-t]',
+  attrInterpolateSelector: '[data-attr-t-interpolate]',
   useAttr: true
   replace: false
   locales: ['en']
@@ -21,6 +22,7 @@ defaults =
   removeAttr: true
   outputDir: undefined
   attrSuffix: '-t'
+  attrInterpolateSuffix: '-t-interpolate'
   allowHtml: false
   exclude: []
   fileFormat: 'json'
@@ -87,14 +89,23 @@ getOutput = (file, locale, options, absolute=true) ->
 
 translateAttributes = ($elem, options, t) ->
   selectorAttr = /^\[(.*?)\]$/.exec(options.attrSelector)?[1]
+  selectorInterpolateAttr = /^\[(.*?)\]$/.exec(options.attrInterpolateSelector)?[1]
+  interpolate = false
+  _.each $elem.attr(), (v, k) ->
+    if S(k).endsWith(options.attrInterpolateSuffix)
+      interpolate = true
   _.each $elem.attr(), (v, k) ->
     return if _.isEmpty(v) || k == selectorAttr
     if S(k).endsWith(options.attrSuffix)
       attr = S(k).chompRight(options.attrSuffix).s
       trans = t(v)
+      if interpolate
+        trans = v.replace /{{([^{}]*)}}/g, (aa, bb) ->
+          return t(bb)
       $elem.attr(attr, trans)
       $elem.attr(k, null) if options.removeAttr
   $elem.attr(selectorAttr, null) if selectorAttr? && options.removeAttr
+  $elem.attr(selectorInterpolateAttr, null) if selectorInterpolateAttr?
 
 translateElem = ($, elem, options, t) ->
   $elem = $(elem)

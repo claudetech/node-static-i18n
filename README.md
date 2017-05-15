@@ -66,7 +66,7 @@ With the following files:
 The following command
 
 ```sh
-$ static-i18n -l en -i en -i ja www
+$ static-i18n -l en -i en -i fr www
 ```
 
 will generate:
@@ -101,14 +101,81 @@ will generate:
 </html>
 ```
 
+## Interpolation
+You can optionally specify that interpolation should be applied to the custom attributes on an element.
+This will translate only the parts of an element wrapped in curly braces {{ }} and leave the rest alone.
+
+With the following files:
+
+`www/index.html`:
+
+```html
+<html>
+  <head>
+    <link rel="canonical" data-attr-t data-attr-t-interpolate href-t="{{links.baseAbsolute}}filename.{{links.extension}}" />
+  </head>
+</html>
+```
+
+`locales/en.json`
+
+```json
+{
+  "links": {
+    "baseAbsolute": "http://www.example.com/",
+    "extension": "html"
+  }
+}
+```
+
+`locales/ja.json`
+
+```json
+{
+  "links": {
+    "baseAbsolute": "http://www.example.com/ja/",
+    "extension": "htm"
+  }
+}
+```
+
+The following command
+
+```sh
+$ static-i18n --locale en --locales en --locales ja www
+```
+
+Will generate:
+
+`i18n/index.html`
+
+```html
+<html>
+  <head>
+    <link rel="canonical" href="http://www.example.com/filename.html" />
+  </head>
+</html>
+```
+
+`i18n/ja/index.html`
+
+```html
+<html>
+  <head>
+    <link rel="canonical" href="http://www.example.com/ja/filename.htm" />
+  </head>
+</html>
+```
+
 ## Configuration
 
 This tool has several configuration options to adapt to most common use cases.
 
 * `selector` (default: `[data-t]`): The selector to look for elements to translate. If it is an attribute, the attribute content is used as the key when non empty, otherwise the text of the element is used.
 * `attrSelector` (default: `[data-attr-t]`): The selector to look for elements
-for which to translate attributes.
+* `attrInterpolateSelector` (default: `[data-attr-t-interpolate]`): The selector that should be applied to elements to indicate that interpolation should be performed for the custom attributes on that element
 * `attrSuffix` (default: `-t`): Suffix for attr to translate. `value-t` will be translated and mapped to `value`.
+* `attrInterpolateSuffix` (default: `-t-interpolate`): Suffix for attr to interpolate the translations.
 * `useAttr` (default: `true`): If `false`, the element text is always used as the key, even if the attribute value is not empty.
 * `replace` (default: `false`): If `true`, the element is replaced by the translation. Useful to use something like `<t>my.key</t>` to translate.
 * `locales` (default: `['en']`): the list of locales to be generated.
