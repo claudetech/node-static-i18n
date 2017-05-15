@@ -44,6 +44,18 @@ describe 'processor', ->
         expect($('input').attr('id')).to.be 'ok'
         done()
 
+    it 'should translate attributes with interpolation', (done) ->
+      _.merge options, {locales: ['en', 'ja']}
+      input = '<input data-attr-t data-attr-t-interpolate href-t="{{links.baseAbsolute}}filename.{{links.extension}}">'
+      staticI18n.process input, options, (err, results) ->
+        $ = cheerio.load(results.en)
+        expect($('input').attr('href')).to.be 'http://www.example.com/filename.html'
+        expect($('input').attr('data-attr-t-interpolate')).to.be(undefined)
+        $ = cheerio.load(results.ja)
+        expect($('input').attr('href')).to.be 'http://www.example.com/ja/filename.htm'
+        expect($('input').attr('data-attr-t-interpolate')).to.be(undefined)
+        done()
+
   describe '#processFile', ->
     it 'should translate data-t', (done) ->
       staticI18n.processFile file, options, (err, results) ->

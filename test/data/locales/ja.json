@@ -2,5 +2,9 @@
   "foo": {
     "bar": "ja_bar",
     "baz": "ja_baz"
+  },
+  "links": {
+      "baseAbsolute": "http://www.example.com/ja/",
+      "extension": "htm"
   }
 }
