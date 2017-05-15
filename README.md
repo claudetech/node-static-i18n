@@ -162,7 +162,7 @@ Will generate:
 ```html
 <html>
   <head>
-    <link rel="canonical" href-t="http://www.example.com/ja/filename.htm" />
+    <link rel="canonical" href="http://www.example.com/ja/filename.htm" />
   </head>
 </html>
 ```
