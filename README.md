@@ -112,7 +112,7 @@ With the following files:
 ```html
 <html>
   <head>
-    <link rel="canonical" data-attr-t data-attr-t-interpolate href-t="{{links.baseAbsolute}}filename.{{links.extension}} />
+    <link rel="canonical" data-attr-t data-attr-t-interpolate href-t="{{links.baseAbsolute}}filename.{{links.extension}}" />
   </head>
 </html>
 ```
@@ -152,7 +152,7 @@ Will generate:
 ```html
 <html>
   <head>
-    <link rel="canonical" data-attr-t data-attr-t-interpolate href-t="http://www.example.com/filename.html />
+    <link rel="canonical" href="http://www.example.com/filename.html" />
   </head>
 </html>
 ```
@@ -162,7 +162,7 @@ Will generate:
 ```html
 <html>
   <head>
-    <link rel="canonical" data-attr-t data-attr-t-interpolate href-t="http://www.example.com/ja/filename.htm />
+    <link rel="canonical" href-t="http://www.example.com/ja/filename.htm" />
   </head>
 </html>
 ```
@@ -173,7 +173,7 @@ This tool has several configuration options to adapt to most common use cases.
 
 * `selector` (default: `[data-t]`): The selector to look for elements to translate. If it is an attribute, the attribute content is used as the key when non empty, otherwise the text of the element is used.
 * `attrSelector` (default: `[data-attr-t]`): The selector to look for elements
-* `attrInterpolateSelector` (default: `[data-attr-t-interpolate]`): The selector that will be applied to elements to indicate that interpolation should be performed for the custom attributes on that element
+* `attrInterpolateSelector` (default: `[data-attr-t-interpolate]`): The selector that should be applied to elements to indicate that interpolation should be performed for the custom attributes on that element
 * `attrSuffix` (default: `-t`): Suffix for attr to translate. `value-t` will be translated and mapped to `value`.
 * `attrInterpolateSuffix` (default: `-t-interpolate`): Suffix for attr to interpolate the translations.
 * `useAttr` (default: `true`): If `false`, the element text is always used as the key, even if the attribute value is not empty.
