@@ -12,7 +12,7 @@ For global installation, needed for CLI uage, run
 $ npm install -g static-i18n
 ```
 
-Note that you can also use this as a [Grunt plugin](https://github.com/claudetech/grunt-i18n-static).
+Note that you can also use this as a [Grunt plugin](https://github.com/claudetech/grunt-i18n-static) or a [gulp plugin](https://github.com/36web/gulp-static-i18n-html).
 
 ## Example
 
@@ -170,6 +170,12 @@ Will generate:
 ## Configuration
 
 This tool has several configuration options to adapt to most common use cases.
+
+When using the CLI, these options can be passed by using the kebab-case version of the key. For example. `attrSelector` can be passed with
+
+```
+static-i18n --attr-selector my-attr-t ...
+```
 
 * `selector` (default: `[data-t]`): The selector to look for elements to translate. If it is an attribute, the attribute content is used as the key when non empty, otherwise the text of the element is used.
 * `attrSelector` (default: `[data-attr-t]`): The selector to look for elements
