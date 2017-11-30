@@ -48,13 +48,17 @@ parseTranslations = (format, rawTranslations, callback) ->
         callback null, yaml.load(rawTranslations)
       catch e
         callback e
+    when '.json'
+      try
+        callback null, JSON.parse(rawTranslations)
+      catch e
+        callback e
     else
       callback {message: 'unknown format'}
 
 loadResources = (locale, options, callback) ->
   file = path.join(options.localesPath, options.localeFile).replace('__lng__', locale)
   extension =  path.extname file
-  return callback(null) if extension == '.json'
   fs.readFile file, options.encoding, (err, data) ->
     return callback(err) if err
     parseTranslations extension, data, callback
