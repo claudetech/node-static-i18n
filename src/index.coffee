@@ -126,7 +126,7 @@ translateElem = ($, elem, options, t) ->
     if options.allowHtml
       $elem.html(trans)
     else
-      if $elem.filter(otpions.interpolateSelector).length
+      if $elem.filter(options.interpolateSelector).length
         trans = trans.replace /{{([^{}]*)}}/g, (aa, bb) ->
           return t(bb)
       $elem.text(trans)
