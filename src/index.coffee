@@ -11,6 +11,7 @@ S       = require 'string'
 defaults =
   selector: '[data-t]'
   attrSelector: '[data-attr-t]',
+  interpolateSelector: '[data-t-interpolate]',
   attrInterpolateSelector: '[data-attr-t-interpolate]',
   useAttr: true
   replace: false
@@ -125,6 +126,9 @@ translateElem = ($, elem, options, t) ->
     if options.allowHtml
       $elem.html(trans)
     else
+      if $elem.filter(otpions.interpolateSelector).length
+        trans = trans.replace /{{([^{}]*)}}/g, (aa, bb) ->
+          return t(bb)
       $elem.text(trans)
 
 getPath = (fpath, locale, options) ->
