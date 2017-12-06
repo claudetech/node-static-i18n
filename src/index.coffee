@@ -102,13 +102,14 @@ translateAttributes = ($elem, options, t) ->
   _.each $elem.attr(), (v, k) ->
     return if _.isEmpty(v) || k == selectorAttr
     if S(k).endsWith(options.attrSuffix)
-      attr = S(k).chompRight(options.attrSuffix).s
+      isData = options.useAttr && k == /^\[(.*?)\]$/.exec(options.selector)?[1]
+      attr = if isData then k else S(k).chompRight(options.attrSuffix).s
       trans = t(v)
       if interpolate
         trans = v.replace /{{([^{}]*)}}/g, (aa, bb) ->
           return t(bb)
       $elem.attr(attr, trans)
-      $elem.attr(k, null) if options.removeAttr
+      $elem.attr(k, null) if options.removeAttr && !isData
   $elem.attr(selectorAttr, null) if selectorAttr? && options.removeAttr
   $elem.attr(selectorInterpolateAttr, null) if selectorInterpolateAttr?
 
@@ -123,13 +124,16 @@ translateElem = ($, elem, options, t) ->
   if options.replace
     $elem.replaceWith trans
   else
+    interpolateAttr = /^\[(.*?)\]$/.exec(options.interpolateSelector)?[1]
+    interpolate = $elem.filter(options.interpolateSelector).length
+    if interpolate
+      trans = trans.replace /{{([^{}]*)}}/g, (aa, bb) ->
+        return t(bb)
     if options.allowHtml
       $elem.html(trans)
     else
-      if $elem.filter(options.interpolateSelector).length
-        trans = trans.replace /{{([^{}]*)}}/g, (aa, bb) ->
-          return t(bb)
       $elem.text(trans)
+    $elem.attr(interpolateAttr, null) if options.removeAttr && interpolate
 
 getPath = (fpath, locale, options) ->
   filepath = path.relative(options.baseDir, options.file)
@@ -170,10 +174,10 @@ exports.translate = (html, locale, options, t) ->
   $ = cheerio.load(html, {decodeEntities: false})
   translateConditionalComments $, $.root(), locale, options, t if options.translateConditionalComments
   elems = $(options.selector)
-  elems.each ->
-    translateElem $, this, options, t
   $(options.attrSelector).each ->
     translateAttributes $(this), options, t
+  elems.each ->
+    translateElem $, this, options, t
   if options.file && options.fixPaths
     fixPaths $, locale, options
   $.html()
