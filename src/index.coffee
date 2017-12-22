@@ -131,7 +131,7 @@ translateElem = ($, elem, options, t) ->
         return t(bb)
     if options.allowHtml
       if interpolate
-        $elem.html($elem.html().trans.replace /{{([^{}]*)}}/g, (aa, bb) ->
+        $elem.html($elem.html().replace /{{([^{}]*)}}/g, (aa, bb) ->
           return t(bb))
       else
         $elem.html(trans)
