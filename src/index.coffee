@@ -130,7 +130,11 @@ translateElem = ($, elem, options, t) ->
       trans = trans.replace /{{([^{}]*)}}/g, (aa, bb) ->
         return t(bb)
     if options.allowHtml
-      $elem.html(trans)
+      if interpolate
+        $elem.html($elem.html().replace /{{([^{}]*)}}/g, (aa, bb) ->
+          return t(bb))
+      else
+        $elem.html(trans)
     else
       $elem.text(trans)
     $elem.attr(interpolateAttr, null) if options.removeAttr && interpolate
