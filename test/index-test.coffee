@@ -57,12 +57,19 @@ describe 'processor', ->
         done()
 
     it 'should remove interpolation related attributes', (done) ->
-      options = _.merge {}, options, {locales: ['en', 'ja']}
+      options = _.merge {}, options, {locales: ['en']}
 
-      input = '<p data-t data-t-interpolate="">texto aqui<div>Whatever here</div></p>'
+      input = '<p data-t data-t-interpolate>texto aqui<div>Whatever here</div></p>'
       staticI18n.process input, options, (err, results) ->
         $ = cheerio.load(results.en)
         expect($('p').attr('data-t-interpolate')).to.be(undefined)
+        done()
+
+    it 'should not break SVG in XML mode', (done) ->
+      options = _.merge {}, options, {locales: ['en'], xmlMode: true}
+      input = '<svg width="200" height="200"><path d="M10 10"/></svg>'
+      staticI18n.process input, options, (err, results) ->
+        expect(results.en).to.equal(input)
         done()
 
   describe '#processFile', ->
