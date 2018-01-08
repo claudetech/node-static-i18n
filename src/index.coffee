@@ -13,7 +13,7 @@ defaults =
   attrSelector: '[data-attr-t]',
   interpolateSelector: '[data-t-interpolate]',
   attrInterpolateSelector: '[data-attr-t-interpolate]',
-  xmlMode: false
+  xml: false
   useAttr: true
   replace: false
   locales: ['en']
@@ -176,7 +176,7 @@ translateConditionalComments = ($, rootNode, locale, options, t) ->
       translateConditionalComments($, $(node), locale, options, t)
 
 exports.translate = (html, locale, options, t) ->
-  $ = cheerio.load(html, {decodeEntities: false, xmlMode: options.xmlMode})
+  $ = cheerio.load(html, {decodeEntities: false, xmlMode: options.xml})
   translateConditionalComments $, $.root(), locale, options, t if options.translateConditionalComments
   elems = $(options.selector)
   $(options.attrSelector).each ->

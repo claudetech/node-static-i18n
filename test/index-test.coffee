@@ -66,7 +66,7 @@ describe 'processor', ->
         done()
 
     it 'should not break SVG in XML mode', (done) ->
-      options = _.merge {}, options, {locales: ['en'], xmlMode: true}
+      options = _.merge {}, options, {locales: ['en'], xml: true}
       input = '<svg width="200" height="200"><path d="M10 10"/></svg>'
       staticI18n.process input, options, (err, results) ->
         expect(results.en).to.equal(input)
