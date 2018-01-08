@@ -116,9 +116,15 @@ translateAttributes = ($elem, options, t) ->
 
 translateElem = ($, elem, options, t) ->
   $elem = $(elem)
-  if options.useAttr && attr = /^\[(.*?)\]$/.exec(options.selector)
-    key = $elem.attr(attr[1])
-    $elem.attr(attr[1], null) if options.removeAttr
+  if options.useAttr
+  [
+    options.selector
+    options.interpolateSelector
+  ].forEach (selectorString) ->
+    if attr = /^\[(.*?)\]$/.exec(selectorString)
+      key = $elem.attr(attr[1])
+      if options.removeAttr
+        $elem.attr attr[1], null
   key = $elem.text() if _.isEmpty(key)
   return if _.isEmpty(key)
   trans = t(key)
