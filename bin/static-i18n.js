@@ -4,7 +4,7 @@ var minimist   = require('minimist')
   , staticI18n = require('../lib');
 
 var minimistOptions = {
-  boolean: ['replace', 'useAttr', 'removeAttr', 'fixPaths', 'translateConditionalComments', 'xml']
+  boolean: ['replace', 'useAttr', 'removeAttr', 'fixPaths', 'translateConditionalComments', 'xml', 'version', 'help']
 , string: ['locale', 'selector', 'outputDir', 'outputDefault', 'outputOther', 'locales']
 , alias: {
     l: 'locale'
@@ -12,6 +12,8 @@ var minimistOptions = {
   , s: 'selector'
   , d: 'baseDir'
   , o: 'outputDir'
+  , v: 'version'
+  , h: 'help'
   , 'output-dir': 'outputDir'
   , 'base-dir': 'baseDir'
   ,  'translate-conditional-comments': 'translateConditionalComments'
@@ -31,11 +33,45 @@ var minimistOptions = {
   }
 };
 
+var usageText = [
+  'usage: static-i18n [options] directory',
+  '',
+  'positional arguments:',
+  'directory\t\tpath to the directory to translate',
+  '',
+  'optional arguments:',
+  '-l, --locale\t\tdefault locale',
+  '-i, --locales\t\tlocales to use (can be passed multiple times)',
+  '-o, --output-dir\toutput directory (default: i18n)',
+  '-v, --version\t\tprints version and exits',
+  '-h, --help\t\tprints this help and exits',
+  '',
+  'Please check the README for more information:',
+  'https://github.com/claudetech/node-static-i18n'
+].join('\n');
+
 var usage = function () {
-  console.log("usage: static-i18n [options] directory");
+  console.log(usageText);
 };
+
+var version = function () {
+  console.log(require('../package.json').version);
+};
+
 var argv = require('minimist')(process.argv.slice(2), minimistOptions);
+
+if (argv.version) {
+  version();
+  process.exit(0);
+}
+
+if (argv.help) {
+  usage();
+  process.exit(0);
+}
+
 if (argv._.length !== 1) {
+  console.log('missing positional argument: directory');
   usage();
   process.exit(1);
 }
