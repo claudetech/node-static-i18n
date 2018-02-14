@@ -5,7 +5,7 @@ _          = require 'lodash'
 fs         = require 'fs-extra'
 tmp        = require 'tmp'
 
-staticI18n = require '../src/index'
+staticI18n = require '../lib/index'
 
 describe 'processor', ->
   basepath = path.join __dirname, 'data'
