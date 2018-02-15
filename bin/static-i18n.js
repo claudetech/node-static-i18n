@@ -6,8 +6,25 @@ const minimist   = require('minimist');
 const staticI18n = require('../lib');
 
 const minimistOptions = {
-  boolean: ['replace', 'useAttr', 'removeAttr', 'fixPaths', 'translateConditionalComments', 'xml', 'version', 'help'],
-  string: ['locale', 'selector', 'outputDir', 'outputDefault', 'outputOther', 'locales'],
+  boolean: [
+    'replace',
+    'useAttr',
+    'removeAttr',
+    'fixPaths',
+    'translateConditionalComments',
+    'xml',
+    'allowHtml',
+    'version',
+    'help'
+  ],
+  string: [
+    'locale',
+    'selector',
+    'outputDir',
+    'outputDefault',
+    'outputOther',
+    'locales'
+  ],
   alias: {
     l: 'locale',
     i: 'locales',
@@ -24,7 +41,8 @@ const minimistOptions = {
     'file-format': 'fileFormat',
     'fix-paths': 'fixPaths',
     'locales-path': 'localesPath',
-    'output-override': 'outputOverride'
+    'output-override': 'outputOverride',
+    'allow-html': 'allowHtml'
   },
   default: {
     useAttr: true,
