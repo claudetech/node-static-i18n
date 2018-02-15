@@ -1,10 +1,4 @@
 node_modules/
 
-### PhpStorm ###
-# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
-
-## Directory-based project format
-!.idea/
-.idea/*
-!.idea/scopes/
-!.idea/scopes/*
+.nyc_output/
+coverage/
