@@ -129,6 +129,12 @@ describe('processor', function() {
       const $ = cheerio.load(results['index.html'].en);
       expect($('#bar').text()).to.be('bar');
     });
+
+    it('should work with single locale', async function() {
+      _.merge(options, {locales: 'en', exclude: ['ignored/']});
+      const results = await staticI18n.processDir(basepath, options);
+      expect(results['index.html']).to.only.have.keys(['en']);
+    });
   });
 
   describe('withOutput', function() {
