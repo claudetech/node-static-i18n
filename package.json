@@ -33,10 +33,10 @@
   },
   "dependencies": {
     "bluebird": "^3.5.1",
-    "cheerio": "^0.17.0",
+    "cheerio": "^0.22.0",
     "fs-extra": "^5.0.0",
     "glob": "^7.1.2",
-    "i18next": "^1.7.4",
+    "i18next": "^11.2.3",
     "js-yaml": "^3.10.0",
     "lodash": "^4.17.5",
     "minimist": "^1.1.0",
