@@ -47,6 +47,15 @@ describe('processor', function() {
       expect($('input').attr('id')).to.be('ok');
     });
 
+    it('should translate attributes include "t"', async function() {
+      const img = '<img src="example.png" class="foo" id="ok" data-attr-t alt-t="foo.bar">';
+      const results = await staticI18n.process(img, options);
+      const $ = cheerio.load(results.en);
+      expect(results).to.only.have.keys(['en']);
+      expect($('img').attr('alt')).to.be('bar');
+      expect($('img').attr('id')).to.be('ok');
+    });
+
     it('should translate attributes with interpolation', async function() {
       options = _.merge({}, options, {locales: ['en', 'ja']});
       const input = '<input data-attr-t data-attr-t-interpolate href-t="{{links.baseAbsolute}}filename.{{links.extension}}">';
