@@ -48,11 +48,12 @@ describe('processor', function() {
     });
 
     it('should translate attributes include "t"', async function() {
-      const img = '<img src="example.png" class="foo" id="ok" data-attr-t alt-t="foo.bar">';
+      const img = '<img src="example.png" class="foo" id="ok" data-attr-t alt-t="foo.bar" tool-tip-t="foo.bar">';
       const results = await staticI18n.process(img, options);
       const $ = cheerio.load(results.en);
       expect(results).to.only.have.keys(['en']);
       expect($('img').attr('alt')).to.be('bar');
+      expect($('img').attr('tool-tip')).to.be('bar');
       expect($('img').attr('id')).to.be('ok');
     });
 
