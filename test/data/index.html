@@ -7,15 +7,32 @@
 <head>
   <meta charset="UTF-8">
   <title>Foo</title>
+
   <script id="abs-script" src="//foo.js"></script>
   <script id="rel-script" src="foo.js"></script>
+
   <link id="abs-link" rel="stylesheet" href="//foo.css">
   <link id="rel-link" rel="stylesheet" href="foo.css">
 </head>
 <body>
+  <img id="abs-img" src="//foo.png" />
+  <img id="rel-img" src="foo.png" />
+
+  <audio id="abs-audio" src="//foo.mp3"></audio>
+  <audio id="rel-audio" src="foo.mp3"></audio>
+
+  <video id="abs-video" src="//foo.mp4"></video>
+  <video id="rel-video" src="foo.mp4"></video>
+
+  <picture>
+    <source id="abs-source" src="//foo.jpg"></source>
+    <source id="rel-source" src="foo.jpg"></source>
+  </picture>
+
   <!--[if lt IE 9]>
     <p class="browsehappy" data-t>browsehappy</p>
   <![endif]-->
+
   <h1 id="bar" data-t="foo.bar"></h1>
   <h1 id="baz" data-t>foo.baz</h1>
 

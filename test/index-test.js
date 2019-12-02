@@ -184,16 +184,34 @@ describe('processor', function() {
       expect(files).to.not.contain('index.html');
     });
 
-    it('should fix pathes', async function() {
+    it('should fix paths', async function() {
       await staticI18n.processDir(basepath, options);
       let $ = cheerio.load(await fs.readFile(path.join(dir, 'ja', 'index.html'), 'utf8'));
       expect($('#rel-script').attr('src')).to.be('../foo.js');
       expect($('#abs-script').attr('src')).to.be('//foo.js');
+
       expect($('#rel-link').attr('href')).to.be('../foo.css');
       expect($('#abs-link').attr('href')).to.be('//foo.css');
+
+      expect($('#rel-img').attr('src')).to.be('../foo.png');
+      expect($('#abs-img').attr('src')).to.be('//foo.png');
+
+      expect($('#rel-audio').attr('src')).to.be('../foo.mp3');
+      expect($('#abs-audio').attr('src')).to.be('//foo.mp3');
+
+      expect($('#rel-video').attr('src')).to.be('../foo.mp4');
+      expect($('#abs-video').attr('src')).to.be('//foo.mp4');
+
+      expect($('#rel-source').attr('src')).to.be('../foo.jpg');
+      expect($('#abs-source').attr('src')).to.be('//foo.jpg');
+
       $ = cheerio.load(fs.readFileSync(path.join(dir, 'index.html'), 'utf8'));
       expect($('#rel-script').attr('src')).to.be('foo.js');
       expect($('#rel-link').attr('href')).to.be('foo.css');
+      expect($('#rel-img').attr('src')).to.be('foo.png');
+      expect($('#rel-audio').attr('src')).to.be('foo.mp3');
+      expect($('#rel-video').attr('src')).to.be('foo.mp4');
+      expect($('#rel-source').attr('src')).to.be('foo.jpg');
     });
   });
 });
