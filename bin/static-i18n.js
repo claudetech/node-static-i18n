@@ -15,7 +15,8 @@ const minimistOptions = {
     'xml',
     'allowHtml',
     'version',
-    'help'
+    'help',
+    'localeRootKey'
   ],
   string: [
     'locale',
@@ -23,7 +24,7 @@ const minimistOptions = {
     'outputDir',
     'outputDefault',
     'outputOther',
-    'locales'
+    'locales',
   ],
   alias: {
     l: 'locale',
@@ -33,6 +34,8 @@ const minimistOptions = {
     o: 'outputDir',
     v: 'version',
     h: 'help',
+    r: 'localeRootKey',
+    'root-key': 'rootKey',
     'output-dir': 'outputDir',
     'base-dir': 'baseDir',
     'translate-conditional-comments': 'translateConditionalComments',
@@ -45,6 +48,7 @@ const minimistOptions = {
     'allow-html': 'allowHtml'
   },
   default: {
+    localeRootKey: false,
     useAttr: true,
     fixPaths: true,
     replace: false,
@@ -65,6 +69,7 @@ const usageText = [
   '-o, --output-dir\toutput directory (default: i18n)',
   '-v, --version\t\tprints version and exits',
   '-h, --help\t\tprints this help and exits',
+  '-r, --root-key\t\tuse locale as source file root key',
   '',
   'Please check the README for more information:',
   'https://github.com/claudetech/node-static-i18n'
