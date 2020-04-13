@@ -184,6 +184,7 @@ static-i18n --attr-selector my-attr-t ...
 * `attrSuffix` (default: `-t`): Suffix for attr to translate. `value-t` will be translated and mapped to `value`.
 * `attrInterpolateSuffix` (default: `-t-interpolate`): Suffix for attr to interpolate the translations.
 * `useAttr` (default: `true`): If `false`, the element text is always used as the key, even if the attribute value is not empty.
+* `nsSeparator` (default: `:`): The namespace separator. Useful if keys contain colons. Change it to something else to prevent cutting off the namespace.
 * `replace` (default: `false`): If `true`, the element is replaced by the translation. Useful to use something like `<t>my.key</t>` to translate.
 * `locales` (default: `['en']`, CLI alias: `-i`): the list of locales to be generated.
   All locales need to have an existing resource file.
