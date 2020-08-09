@@ -84,6 +84,13 @@ describe('processor', function() {
       const results = await staticI18n.process(input, options);
       expect(results.en).to.equal(input);
     });
+
+    it('should handle namespace separator', async function() {
+      options = _.merge({}, options, {nsSeparator: '#', locales: ['ja']});
+      const input = '<p data-t="ns:boo.namespace:zoo"></p>';
+      const results = await staticI18n.process(input, options);
+      expect(results.ja).to.be('<p>ja_wow</p>');
+    });
   });
 
   describe('#processFile', function() {

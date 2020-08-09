@@ -3,6 +3,9 @@
     "bar": "ja_bar",
     "baz": "ja_baz"
   },
+  "ns:boo": {
+    "namespace:zoo": "ja_wow"
+  },
   "links": {
       "baseAbsolute": "http://www.example.com/ja/",
       "extension": "htm"
