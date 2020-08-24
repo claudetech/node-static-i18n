@@ -212,7 +212,7 @@ describe('processor', function() {
       expect($('#rel-source').attr('src')).to.be('../foo.jpg');
       expect($('#abs-source').attr('src')).to.be('//foo.jpg');
 
-      expect($('#rel-style').attr('style')).to.be("background-image: url('../bg.jpg'); background: url('../bg.jpg'");
+      expect($('#rel-style').attr('style')).to.be("background-image: url('../bg.jpg'); background: url('../bg.jpg')");
       expect($('#abs-style').attr('style')).to.be("background-image: url(//bg.jpg); background: url('//bg.jpg')");
 
       $ = cheerio.load(fs.readFileSync(path.join(dir, 'index.html'), 'utf8'));
