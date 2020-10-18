@@ -41,5 +41,8 @@
     "lodash": "^4.17.5",
     "minimist": "^1.1.0",
     "mocha": "^5.0.1"
+  },
+  "prettier": {
+    "singleQuote": true
   }
 }
