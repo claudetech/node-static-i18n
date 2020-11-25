@@ -16,7 +16,7 @@ const minimistOptions = {
     'allowHtml',
     'version',
     'help',
-    'localeRootKey'
+    'localeRootKey',
   ],
   string: [
     'locale',
@@ -36,16 +36,18 @@ const minimistOptions = {
     h: 'help',
     r: 'localeRootKey',
     'root-key': 'rootKey',
-    'output-dir': 'outputDir',
     'base-dir': 'baseDir',
+    'output-dir': 'outputDir',
+    'output-default': 'outputDefault',
+    'output-other': 'outputOther',
+    'output-override': 'outputOverride',
     'translate-conditional-comments': 'translateConditionalComments',
     f: 'fixPaths',
     t: 'fileFormat',
     'file-format': 'fileFormat',
     'fix-paths': 'fixPaths',
     'locales-path': 'localesPath',
-    'output-override': 'outputOverride',
-    'allow-html': 'allowHtml'
+    'allow-html': 'allowHtml',
   },
   default: {
     localeRootKey: false,
@@ -53,8 +55,8 @@ const minimistOptions = {
     fixPaths: true,
     replace: false,
     removeAttr: true,
-    xml: false
-  }
+    xml: false,
+  },
 };
 
 const usageText = [
