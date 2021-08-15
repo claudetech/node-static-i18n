@@ -179,12 +179,12 @@ describe('processor', function () {
 
   describe('#processDir', function () {
     it('should process all files', async function () {
-      _.merge(options, { locales: ['en', 'ja'], exclude: ['ignored/'] });
+      _.merge(options, { locales: ['en', 'ja'], exclude: [`ignored${path.sep}`] });
       const results = await staticI18n.processDir(basepath, options);
       expect(results).to.only.have.keys([
         'index.html',
         'other.html',
-        'sub/index.html',
+        path.join('sub', 'index.html'),
       ]);
       expect(results['index.html']).to.only.have.keys(['en', 'ja']);
       expect(results['other.html']).to.only.have.keys(['en', 'ja']);
