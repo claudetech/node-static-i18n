@@ -219,6 +219,8 @@ static-i18n --attr-selector my-attr-t ...
       }
     }
     ```
+* `interpolationPrefix` (default: `{{`): Override the default interpolation prefix
+* `interpolationSuffix` (default: `}}`): Override the default interpolation suffix
 * `i18n`: Object passed directly to [`i18next.init`](http://i18next.com/pages/doc_init.html). This allows you to override pretty much anything. Read [i18next](http://i18next.com/) doc for more info.
 
 When using the CLI, `outputOverride` and `i18n` options are parsed as JSON.
