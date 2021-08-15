@@ -75,6 +75,22 @@ describe('processor', function () {
       expect($('input').attr('data-attr-t-interpolate')).to.be(undefined);
     });
 
+    it('should support custom prefix and suffix when translating attributes with interpolation', async function () {
+      options = _.merge({}, options, { locales: ['en', 'ja'], interpolationPrefix: '_{', interpolationSuffix: '}' });
+      const input =
+        '<input data-attr-t data-attr-t-interpolate href-t="_{links.baseAbsolute}filename._{links.extension}">';
+      const results = await staticI18n.process(input, options);
+      let $ = cheerio.load(results.en);
+      expect($('input').attr('href')).to.be(
+        'http://www.example.com/filename.html'
+      );
+      expect($('input').attr('data-attr-t-interpolate')).to.be(undefined);
+      $ = cheerio.load(results.ja);
+      expect($('input').attr('href')).to.be(
+        'http://www.example.com/ja/filename.htm'
+      );
+      expect($('input').attr('data-attr-t-interpolate')).to.be(undefined);
+    });
     it('should remove interpolation related attributes', async function () {
       options = _.merge({}, options, { locales: ['en'] });
 
