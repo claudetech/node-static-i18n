@@ -49,7 +49,7 @@ describe('processor', function () {
 
     it('should translate attributes include "t"', async function () {
       const img =
-        '<img src="example.png" class="foo" id="ok" data-attr-t alt-t="foo.bar" tool-tip-t="foo.bar">';
+          '<img src="example.png" class="foo" id="ok" data-attr-t alt-t="foo.bar" tool-tip-t="foo.bar">';
       const results = await staticI18n.process(img, options);
       const $ = cheerio.load(results.en);
       expect(results).to.only.have.keys(['en']);
@@ -61,16 +61,16 @@ describe('processor', function () {
     it('should translate attributes with interpolation', async function () {
       options = _.merge({}, options, { locales: ['en', 'ja'] });
       const input =
-        '<input data-attr-t data-attr-t-interpolate href-t="{{links.baseAbsolute}}filename.{{links.extension}}">';
+          '<input data-attr-t data-attr-t-interpolate href-t="{{links.baseAbsolute}}filename.{{links.extension}}">';
       const results = await staticI18n.process(input, options);
       let $ = cheerio.load(results.en);
       expect($('input').attr('href')).to.be(
-        'http://www.example.com/filename.html'
+          'http://www.example.com/filename.html'
       );
       expect($('input').attr('data-attr-t-interpolate')).to.be(undefined);
       $ = cheerio.load(results.ja);
       expect($('input').attr('href')).to.be(
-        'http://www.example.com/ja/filename.htm'
+          'http://www.example.com/ja/filename.htm'
       );
       expect($('input').attr('data-attr-t-interpolate')).to.be(undefined);
     });
@@ -79,7 +79,7 @@ describe('processor', function () {
       options = _.merge({}, options, { locales: ['en'] });
 
       const input =
-        '<p data-t data-t-interpolate>texto aqui<div>Whatever here</div></p>';
+          '<p data-t data-t-interpolate>texto aqui<div>Whatever here</div></p>';
       const results = await staticI18n.process(input, options);
       const $ = cheerio.load(results.en);
       expect($('p').attr('data-t-interpolate')).to.be(undefined);
@@ -186,18 +186,18 @@ describe('processor', function () {
       await staticI18n.processDir(basepath, options);
       let files = await fs.readdir(dir);
       _.each(['index.html', 'other.html', 'ja', 'sub'], (f) =>
-        expect(files).to.contain(f)
+          expect(files).to.contain(f)
       );
       files = await fs.readdir(path.join(dir, 'ja'));
       _.each(['index.html', 'other.html', 'sub'], (f) =>
-        expect(files).to.contain(f)
+          expect(files).to.contain(f)
       );
       let $ = cheerio.load(
-        await fs.readFile(path.join(dir, 'index.html'), 'utf8')
+          await fs.readFile(path.join(dir, 'index.html'), 'utf8')
       );
       expect($('#bar').text()).to.be('bar');
       $ = cheerio.load(
-        await fs.readFile(path.join(dir, 'sub', 'index.html'), 'utf8')
+          await fs.readFile(path.join(dir, 'sub', 'index.html'), 'utf8')
       );
       expect($('#bar').text()).to.be('bar');
     });
@@ -209,7 +209,7 @@ describe('processor', function () {
       await staticI18n.processDir(basepath, options);
       const files = fs.readdirSync(dir);
       _.each(['foo.html', 'other.html', 'ja'], (f) =>
-        expect(files).to.contain(f)
+          expect(files).to.contain(f)
       );
       expect(files).to.not.contain('index.html');
     });
@@ -217,8 +217,9 @@ describe('processor', function () {
     it('should fix paths', async function () {
       await staticI18n.processDir(basepath, options);
       let $ = cheerio.load(
-        await fs.readFile(path.join(dir, 'ja', 'index.html'), 'utf8')
+          await fs.readFile(path.join(dir, 'ja', 'index.html'), 'utf8')
       );
+
       expect($('#rel-script').attr('src')).to.be('../foo.js');
       expect($('#abs-script').attr('src')).to.be('//foo.js');
 
@@ -226,7 +227,9 @@ describe('processor', function () {
       expect($('#abs-link').attr('href')).to.be('//foo.css');
 
       expect($('#rel-img').attr('src')).to.be('../foo.png');
+      expect($('#rel-img').attr('srcset')).to.be('../foo-mobile.png 640w, ../foo.png 1024w');
       expect($('#abs-img').attr('src')).to.be('//foo.png');
+      expect($('#abs-img').attr('srcset')).to.be('//foo-mobile.png 640w, //foo.png 1024w');
 
       expect($('#rel-audio').attr('src')).to.be('../foo.mp3');
       expect($('#abs-audio').attr('src')).to.be('//foo.mp3');
@@ -238,21 +241,22 @@ describe('processor', function () {
       expect($('#abs-source').attr('src')).to.be('//foo.jpg');
 
       expect($('#rel-style').attr('style')).to.be(
-        "background-image: url('../bg.jpg'); background: url('../bg.jpg')"
+          "background-image: url('../bg.jpg'); background: url('../bg.jpg')"
       );
       expect($('#abs-style').attr('style')).to.be(
-        "background-image: url(//bg.jpg); background: url('//bg.jpg')"
+          "background-image: url(//bg.jpg); background: url('//bg.jpg')"
       );
 
       $ = cheerio.load(fs.readFileSync(path.join(dir, 'index.html'), 'utf8'));
       expect($('#rel-script').attr('src')).to.be('foo.js');
       expect($('#rel-link').attr('href')).to.be('foo.css');
       expect($('#rel-img').attr('src')).to.be('foo.png');
+      expect($('#rel-img').attr('srcset')).to.be('foo-mobile.png 640w, foo.png 1024w');
       expect($('#rel-audio').attr('src')).to.be('foo.mp3');
       expect($('#rel-video').attr('src')).to.be('foo.mp4');
       expect($('#rel-source').attr('src')).to.be('foo.jpg');
       expect($('#rel-style').attr('style')).to.be(
-        "background-image: url('bg.jpg'); background: url('bg.jpg')"
+          "background-image: url('bg.jpg'); background: url('bg.jpg')"
       );
     });
   });
