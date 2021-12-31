@@ -227,9 +227,9 @@ describe('processor', function () {
       expect($('#abs-link').attr('href')).to.be('//foo.css');
 
       expect($('#rel-img').attr('src')).to.be('../foo.png');
-      expect($('#rel-img').attr('srcset')).to.be('../foo-mobile.png 640w, ../foo.png 1024w');
+      expect($('#rel-img').attr('srcset')).to.be('../foo-mobile.png 640w, ../foo-tablet.png 768w, ../foo.png 1024w');
       expect($('#abs-img').attr('src')).to.be('//foo.png');
-      expect($('#abs-img').attr('srcset')).to.be('//foo-mobile.png 640w, //foo.png 1024w');
+      expect($('#abs-img').attr('srcset')).to.be('//foo-mobile.png 640w, //foo-tablet.png 768w, //foo.png 1024w');
 
       expect($('#rel-audio').attr('src')).to.be('../foo.mp3');
       expect($('#abs-audio').attr('src')).to.be('//foo.mp3');
@@ -251,7 +251,7 @@ describe('processor', function () {
       expect($('#rel-script').attr('src')).to.be('foo.js');
       expect($('#rel-link').attr('href')).to.be('foo.css');
       expect($('#rel-img').attr('src')).to.be('foo.png');
-      expect($('#rel-img').attr('srcset')).to.be('foo-mobile.png 640w, foo.png 1024w');
+      expect($('#rel-img').attr('srcset')).to.be('foo-mobile.png 640w, foo-tablet.png 768w, foo.png 1024w');
       expect($('#rel-audio').attr('src')).to.be('foo.mp3');
       expect($('#rel-video').attr('src')).to.be('foo.mp4');
       expect($('#rel-source').attr('src')).to.be('foo.jpg');
