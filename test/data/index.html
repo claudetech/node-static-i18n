@@ -19,6 +19,9 @@
 <img id="abs-img" src="//foo.png" srcset="//foo-mobile.png 640w, //foo-tablet.png 768w, //foo.png 1024w" />
 <img id="rel-img" src="foo.png" srcset="foo-mobile.png 640w, foo-tablet.png 768w, foo.png 1024w" />
 
+<img id="abs-img-single-srcset" src="//foo.png" srcset="//foo-mobile.png" />
+<img id="rel-img-single-srcset" src="foo.png" srcset="foo-mobile.png" />
+
 <audio id="abs-audio" src="//foo.mp3"></audio>
 <audio id="rel-audio" src="foo.mp3"></audio>
 
@@ -26,8 +29,18 @@
 <video id="rel-video" src="foo.mp4"></video>
 
 <picture>
-  <source id="abs-source" src="//foo.jpg"></source>
-  <source id="rel-source" src="foo.jpg"></source>
+  <source id="abs-source-src" src="//foo.jpg"></source>
+  <source id="rel-source-src" src="foo.jpg"></source>
+</picture>
+
+<picture>
+  <source id="abs-source-single-srcset" srcset="//foo.jpg"></source>
+  <source id="rel-source-single-srcset" srcset="foo.jpg"></source>
+</picture>
+
+<picture>
+  <source id="abs-source-srcset" srcset="//foo-mobile.png 640w, //foo-tablet.png 768w, //foo.png 1024w"></source>
+  <source id="rel-source-srcset" srcset="foo-mobile.png 640w, foo-tablet.png 768w, foo.png 1024w"></source>
 </picture>
 
 <div id="abs-style" style="background-image: url(//bg.jpg); background: url('//bg.jpg')"></div>

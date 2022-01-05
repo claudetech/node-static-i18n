@@ -231,14 +231,25 @@ describe('processor', function () {
       expect($('#abs-img').attr('src')).to.be('//foo.png');
       expect($('#abs-img').attr('srcset')).to.be('//foo-mobile.png 640w, //foo-tablet.png 768w, //foo.png 1024w');
 
+      expect($('#rel-img-single-srcset').attr('src')).to.be('../foo.png');
+      expect($('#rel-img-single-srcset').attr('srcset')).to.be('../foo-mobile.png');
+      expect($('#abs-img-single-srcset').attr('src')).to.be('//foo.png');
+      expect($('#abs-img-single-srcset').attr('srcset')).to.be('//foo-mobile.png');
+
       expect($('#rel-audio').attr('src')).to.be('../foo.mp3');
       expect($('#abs-audio').attr('src')).to.be('//foo.mp3');
 
       expect($('#rel-video').attr('src')).to.be('../foo.mp4');
       expect($('#abs-video').attr('src')).to.be('//foo.mp4');
 
-      expect($('#rel-source').attr('src')).to.be('../foo.jpg');
-      expect($('#abs-source').attr('src')).to.be('//foo.jpg');
+      expect($('#rel-source-src').attr('src')).to.be('../foo.jpg');
+      expect($('#abs-source-src').attr('src')).to.be('//foo.jpg');
+
+      expect($('#rel-source-single-srcset').attr('srcset')).to.be('../foo.jpg');
+      expect($('#abs-source-single-srcset').attr('srcset')).to.be('//foo.jpg');
+
+      expect($('#rel-source-srcset').attr('srcset')).to.be('../foo-mobile.png 640w, ../foo-tablet.png 768w, ../foo.png 1024w');
+      expect($('#abs-source-srcset').attr('srcset')).to.be('//foo-mobile.png 640w, //foo-tablet.png 768w, //foo.png 1024w');
 
       expect($('#rel-style').attr('style')).to.be(
           "background-image: url('../bg.jpg'); background: url('../bg.jpg')"
@@ -251,10 +262,14 @@ describe('processor', function () {
       expect($('#rel-script').attr('src')).to.be('foo.js');
       expect($('#rel-link').attr('href')).to.be('foo.css');
       expect($('#rel-img').attr('src')).to.be('foo.png');
+      expect($('#rel-img-single-srcset').attr('src')).to.be('foo.png');
       expect($('#rel-img').attr('srcset')).to.be('foo-mobile.png 640w, foo-tablet.png 768w, foo.png 1024w');
+      expect($('#rel-img-single-srcset').attr('srcset')).to.be('foo-mobile.png');
       expect($('#rel-audio').attr('src')).to.be('foo.mp3');
       expect($('#rel-video').attr('src')).to.be('foo.mp4');
-      expect($('#rel-source').attr('src')).to.be('foo.jpg');
+      expect($('#rel-source-src').attr('src')).to.be('foo.jpg');
+      expect($('#rel-source-single-srcset').attr('srcset')).to.be('foo.jpg');
+      expect($('#rel-source-srcset').attr('srcset')).to.be('foo-mobile.png 640w, foo-tablet.png 768w, foo.png 1024w');
       expect($('#rel-style').attr('style')).to.be(
           "background-image: url('bg.jpg'); background: url('bg.jpg')"
       );
