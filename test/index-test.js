@@ -257,6 +257,9 @@ describe('processor', function () {
       expect($('#abs-style').attr('style')).to.be(
           "background-image: url(//bg.jpg); background: url('//bg.jpg')"
       );
+      expect($('#svg-urls').attr('style')).to.be(
+          "clip-path:url(#clip-path-url-id);fill:url(#linear-gradient-id);"
+      );
 
       $ = cheerio.load(fs.readFileSync(path.join(dir, 'index.html'), 'utf8'));
       expect($('#rel-script').attr('src')).to.be('foo.js');

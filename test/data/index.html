@@ -56,5 +56,21 @@
 <h1 id="bar-replace"><span data-t>foo.bar</span></h1>
 
 <h1 id="bar-replace-sel"><t>foo.bar</t></h1>
+
+<svg width="200" height="200">
+  <path d="M10 10"/>
+  <defs>
+    <path id="anId" d="M0,8c0,4.42,3.58,8,8,8c4.42,0,8-3.58,8-8s-3.58-8-8-8C3.58,0,0,3.58,0,8"/>
+  </defs>
+  <clipPath id="clip-path-url-id">
+    <use xlink:href="#anId"  style="overflow:visible;"/>
+  </clipPath>
+  <linearGradient id="linear-gradient-id" gradientUnits="userSpaceOnUse" x1="2958.5095" y1="627.3567" x2="2958.8643" y2="627.3567" gradientTransform="matrix(0 -45.0926 -45.0926 0 28297.168 133423)">
+    <stop  offset="0" style="stop-color:#0087C9"/>
+    <stop  offset="1" style="stop-color:#05A5DB"/>
+  </linearGradient>
+  <rect id="svg-urls" x="0" style="clip-path:url(#clip-path-url-id);fill:url(#linear-gradient-id);" width="16" height="16"/>
+</svg>
+
 </body>
 </html>
