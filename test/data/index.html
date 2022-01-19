@@ -15,32 +15,62 @@
   <link id="rel-link" rel="stylesheet" href="foo.css">
 </head>
 <body>
-  <img id="abs-img" src="//foo.png" />
-  <img id="rel-img" src="foo.png" />
 
-  <audio id="abs-audio" src="//foo.mp3"></audio>
-  <audio id="rel-audio" src="foo.mp3"></audio>
+<img id="abs-img" src="//foo.png" srcset="//foo-mobile.png 640w, //foo-tablet.png 768w, //foo.png 1024w" />
+<img id="rel-img" src="foo.png" srcset="foo-mobile.png 640w, foo-tablet.png 768w, foo.png 1024w" />
 
-  <video id="abs-video" src="//foo.mp4"></video>
-  <video id="rel-video" src="foo.mp4"></video>
+<img id="abs-img-single-srcset" src="//foo.png" srcset="//foo-mobile.png" />
+<img id="rel-img-single-srcset" src="foo.png" srcset="foo-mobile.png" />
 
-  <picture>
-    <source id="abs-source" src="//foo.jpg"></source>
-    <source id="rel-source" src="foo.jpg"></source>
-  </picture>
+<audio id="abs-audio" src="//foo.mp3"></audio>
+<audio id="rel-audio" src="foo.mp3"></audio>
 
-  <div id="abs-style" style="background-image: url(//bg.jpg); background: url('//bg.jpg')"></div>
-  <div id="rel-style" style="background-image: url(bg.jpg); background: url('bg.jpg')"></div>
+<video id="abs-video" src="//foo.mp4"></video>
+<video id="rel-video" src="foo.mp4"></video>
 
-  <!--[if lt IE 9]>
-    <p class="browsehappy" data-t>browsehappy</p>
-  <![endif]-->
+<picture>
+  <source id="abs-source-src" src="//foo.jpg"></source>
+  <source id="rel-source-src" src="foo.jpg"></source>
+</picture>
 
-  <h1 id="bar" data-t="foo.bar"></h1>
-  <h1 id="baz" data-t>foo.baz</h1>
+<picture>
+  <source id="abs-source-single-srcset" srcset="//foo.jpg"></source>
+  <source id="rel-source-single-srcset" srcset="foo.jpg"></source>
+</picture>
 
-  <h1 id="bar-replace"><span data-t>foo.bar</span></h1>
+<picture>
+  <source id="abs-source-srcset" srcset="//foo-mobile.png 640w, //foo-tablet.png 768w, //foo.png 1024w"></source>
+  <source id="rel-source-srcset" srcset="foo-mobile.png 640w, foo-tablet.png 768w, foo.png 1024w"></source>
+</picture>
 
-  <h1 id="bar-replace-sel"><t>foo.bar</t></h1>
+<div id="abs-style" style="background-image: url(//bg.jpg); background: url('//bg.jpg')"></div>
+<div id="rel-style" style="background-image: url(bg.jpg); background: url('bg.jpg')"></div>
+
+<!--[if lt IE 9]>
+<p class="browsehappy" data-t>browsehappy</p>
+<![endif]-->
+
+<h1 id="bar" data-t="foo.bar"></h1>
+<h1 id="baz" data-t>foo.baz</h1>
+
+<h1 id="bar-replace"><span data-t>foo.bar</span></h1>
+
+<h1 id="bar-replace-sel"><t>foo.bar</t></h1>
+
+<svg width="200" height="200">
+  <path d="M10 10"/>
+  <defs>
+    <path id="anId" d="M0,8c0,4.42,3.58,8,8,8c4.42,0,8-3.58,8-8s-3.58-8-8-8C3.58,0,0,3.58,0,8"/>
+  </defs>
+  <clipPath id="clip-path-url-id">
+    <use xlink:href="#anId"  style="overflow:visible;"/>
+  </clipPath>
+  <linearGradient id="linear-gradient-id" gradientUnits="userSpaceOnUse" x1="2958.5095" y1="627.3567" x2="2958.8643" y2="627.3567" gradientTransform="matrix(0 -45.0926 -45.0926 0 28297.168 133423)">
+    <stop  offset="0" style="stop-color:#0087C9"/>
+    <stop  offset="1" style="stop-color:#05A5DB"/>
+  </linearGradient>
+  <rect id="svg-urls" x="0" style="clip-path:url(#clip-path-url-id);fill:url(#linear-gradient-id);" width="16" height="16"/>
+</svg>
+
 </body>
 </html>
