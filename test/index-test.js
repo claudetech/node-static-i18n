@@ -227,6 +227,7 @@ describe('processor', function () {
 
       expect($('#rel-img').attr('src')).to.be('../foo.png');
       expect($('#abs-img').attr('src')).to.be('//foo.png');
+      expect($('#abs-img-data').attr('src')).to.be('data:image/svg+xml;base64,foo');
 
       expect($('#rel-audio').attr('src')).to.be('../foo.mp3');
       expect($('#abs-audio').attr('src')).to.be('//foo.mp3');
@@ -236,12 +237,16 @@ describe('processor', function () {
 
       expect($('#rel-source').attr('src')).to.be('../foo.jpg');
       expect($('#abs-source').attr('src')).to.be('//foo.jpg');
+      expect($('#abs-source-data').attr('src')).to.be('data:image/svg+xml;base64,foo');
 
       expect($('#rel-style').attr('style')).to.be(
         "background-image: url('../bg.jpg'); background: url('../bg.jpg')"
       );
       expect($('#abs-style').attr('style')).to.be(
         "background-image: url(//bg.jpg); background: url('//bg.jpg')"
+      );
+      expect($('#abs-style-data').attr('style')).to.be(
+        "background-image: url(data:image/svg+xml;base64,foo); background: url('data:image/svg+xml;base64,foo')"
       );
 
       $ = cheerio.load(fs.readFileSync(path.join(dir, 'index.html'), 'utf8'));
