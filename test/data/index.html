@@ -16,6 +16,7 @@
 </head>
 <body>
   <img id="abs-img" src="//foo.png" />
+  <img id="abs-img-data" src="data:image/svg+xml;base64,foo" />
   <img id="rel-img" src="foo.png" />
 
   <audio id="abs-audio" src="//foo.mp3"></audio>
@@ -26,10 +27,12 @@
 
   <picture>
     <source id="abs-source" src="//foo.jpg"></source>
+    <source id="abs-source-data" src="data:image/svg+xml;base64,foo"></source>
     <source id="rel-source" src="foo.jpg"></source>
   </picture>
 
   <div id="abs-style" style="background-image: url(//bg.jpg); background: url('//bg.jpg')"></div>
+  <div id="abs-style-data" style="background-image: url(data:image/svg+xml;base64,foo); background: url('data:image/svg+xml;base64,foo')"></div>
   <div id="rel-style" style="background-image: url(bg.jpg); background: url('bg.jpg')"></div>
 
   <!--[if lt IE 9]>
